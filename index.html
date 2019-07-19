@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drum Kit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="keys">
+        <div class="key" data-key="65">
+            <kbd>A</kbd><br>
+            <span class="sound">Bubble</span>
+        </div>
+
+        <div class="key" data-key="83">
+            <kbd>S</kbd><br>
+            <span class="sound">Clay</span>
+        </div>
+
+        <div class="key" data-key="68">
+            <kbd>D</kbd><br>
+            <span class="sound">Confetti</span>
+        </div>
+
+        <div class="key" data-key="70">
+            <kbd>F</kbd><br>
+            <span class="sound">Glimmer</span>
+        </div>
+
+        <div class="key" data-key="71">
+            <kbd>G</kbd><br>
+            <span class="sound">Moon</span>
+        </div>
+
+        <div class="key" data-key="72">
+            <kbd>H</kbd><br>
+            <span class="sound">Ufo</span>
+        </div>
+
+    </div>
+
+    <audio src="bubbles.mp3" data-key="65"></audio>
+    <audio src="clay.mp3" data-key="83"></audio>
+    <audio src="confetti.mp3" data-key="68"></audio>
+    <audio src="glimmer.mp3" data-key="70"></audio>
+    <audio src="moon.mp3" data-key="71"></audio>
+    <audio src="ufo.mp3" data-key="72"></audio>
+
+    <script>
+    	window.addEventListener('keydown',function(e){
+    		const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    		const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+    		if (!audio) return;
+    		audio.currentTime = 0
+    		audio.play()
+    		key.classList.add('playing');
+
+    	})
+
+    	function removeTransition(e){
+    		if (e.propertyName !== 'transform') return;
+    		this.classList.remove('playing')
+    	}
+
+    	const keys = document.querySelectorAll('.key')
+    	keys.forEach(key => key.addEventListener('transitionend',removeTransition))
+    </script>
+</body>
+
+</html>
